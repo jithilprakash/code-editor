@@ -1,10 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  HostListener
+} from "@angular/core";
 import "brace";
 import "brace/ext/language_tools";
 import { Subscription } from "rxjs";
 import { CodepaneService } from "../services/codepane.service";
 
-import  beautify  from "beautify";
+import beautify from "beautify";
+import pretty from "pretty";
 
 @Component({
   selector: "editor-pane",
@@ -12,6 +19,21 @@ import  beautify  from "beautify";
   styleUrls: ["./editor-pane.component.scss"]
 })
 export class EditorPaneComponent {
+  scrHeight:any;
+  scrWidth:any;
+  runButton : boolean = true;
+  @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.scrHeight = window.innerHeight;
+          this.scrWidth = window.innerWidth;
+          console.log(this.scrHeight, this.scrWidth);
+          if(this.scrWidth<992){
+            this.runButton = true;
+          }else{
+            this.runButton=false;
+          }
+          
+    }
   jsLoadType: any[] = [
     "onLoad",
     "onDomReady",
@@ -21,6 +43,9 @@ export class EditorPaneComponent {
   loadType: string = this.jsLoadType[0];
   selected: any;
   subscription: Subscription;
+  buttonClick: Subscription;
+
+
   @ViewChild("editor") editor;
   @ViewChild("cssEditor") cssEditor;
   @ViewChild("jsEditor") jsEditor;
@@ -39,6 +64,8 @@ export class EditorPaneComponent {
   };
 
   constructor(private codepaneService: CodepaneService) {
+    this.getScreenSize();
+    
     this.subscription = this.codepaneService
       .getSelectedTabs()
       .subscribe(selectedtabs => {
@@ -47,7 +74,18 @@ export class EditorPaneComponent {
         this.showCss = this.selected.selectedTabs.selectedCss;
         this.showJs = this.selected.selectedTabs.selectedJs;
       });
+
+    this.buttonClick = this.codepaneService.knowHeaderClick().subscribe(
+      options => {
+        if (options == "alignCode") {
+          this.beautify();
+        } else if (options == "run") {
+          this.runPlayground();
+        }
+      }
+    );
   }
+
 
   ngAfterViewInit() {
     this.editor.setTheme("monokai");
@@ -57,7 +95,6 @@ export class EditorPaneComponent {
       enableSnippets: true,
       enableLiveAutoCompletion: true
     });
-   
 
     this.cssEditor.getEditor().setOptions({
       enableBasicAutocompletion: true,
@@ -93,7 +130,10 @@ export class EditorPaneComponent {
           this.js +
           "}</script>"
       );
-    } else if (this.loadType == "No wrap - in head" || this.loadType == "onDomready") {
+    } else if (
+      this.loadType == "No wrap - in head" ||
+      this.loadType == "onDomready"
+    ) {
       doc.write("<script type='text/javascript'>" + this.js + "</script>");
     }
 
@@ -111,14 +151,16 @@ export class EditorPaneComponent {
     this.loadType = loadType;
     console.log("-----", loadType);
   }
-  onDataChange(){
+  onDataChange() {
     console.log("onchanged");
-    this.codepaneService.setWebData(this.html,this.css,this.js)
+    this.codepaneService.setWebData(this.html, this.css, this.js);
   }
 
-  beautify(){
+  beautify() {
     console.log("align");
-    this.html =beautify(this.html, {format: 'html'})
+    this.html = pretty(this.html);
+    this.css = beautify(this.css, { format: "css" });
+    this.js = beautify(this.js, { format: "js" });
   }
   ngOnInit() {}
 }

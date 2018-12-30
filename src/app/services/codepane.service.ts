@@ -7,6 +7,7 @@ import { Subject, Observable } from "rxjs";
 export class CodepaneService {
   constructor() {}
   private subject = new Subject<any>();
+  private notify = new Subject<any>();
   private webpageData: any;
 
   selectedTabs(selected: any) {
@@ -24,5 +25,17 @@ export class CodepaneService {
 
   getWebpageData(): any {
     return this.webpageData;
+  }
+
+  knowHeaderClick():Observable<any>{
+    return this.notify.asObservable();
+  }
+  // notifyObservable = this.notify.asObservable();
+
+  public notifyHeaderClick(data: any) {
+    console.log(data)
+    if (data) {
+      this.notify.next(data);
+    }
   }
 }

@@ -49,4 +49,12 @@ export class SideBarComponent implements OnInit {
     })
   }
 }
+
+alignCode(){
+  this.codepaneService.notifyHeaderClick('alignCode');
+}
+
+runPlayground(){
+  this.codepaneService.notifyHeaderClick('run');
+}
 }

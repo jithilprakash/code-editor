@@ -1,5 +1,5 @@
 .editor-container{
-    margin-top: 2%
+    margin-top: 3%
 }
 .editor-dim{
     position: relative;
@@ -12,4 +12,9 @@
 }
 .beautify-btn{
     font-size: 15px;
+}
+.runPlayground{
+    position: fixed;
+    margin-top: -65px;
+    margin-left: 50px;
 }

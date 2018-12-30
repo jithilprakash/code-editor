@@ -1,14 +1,15 @@
 <div class="editor-container">
-  <button class="btn btn-primary" (click)="runPlayground()">Run</button>
+  <!-- <div *ngIf="runButton" class="runPlayground">
+    <button class="btn btn-primary "  (click)="runPlayground()">Run</button>
+  </div> -->
 
   <div class="row">
     <div class="col-md-6" *ngIf="showHtml">
-        <div class="row">
-            <div class="col-auto mr-auto"><label for="html">HTML </label></div>
-            <div class="col-auto"><button class="btn btn-xs btn-success beautify-btn" (click)="beautify()">Beautify</button></div>
-          </div>
-      
-      
+      <div class="row">
+        <div class="col-auto mr-auto"><label for="html">HTML </label></div>
+        <!-- <div class="col-auto"><button class="btn btn-xs btn-success beautify-btn" (click)="beautify()">Beautify</button></div> -->
+      </div>
+
       <ace-editor
         [(text)]="html"
         [mode]="'html'"
@@ -41,11 +42,16 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {{loadType}}
+          {{ loadType }}
         </button>
         <div class="dropdown-menu">
           <div *ngFor="let loadType of jsLoadType">
-            <a class="dropdown-item" href="#" (click)="selectedLoadType(loadType)">{{ loadType }}</a>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="selectedLoadType(loadType)"
+              >{{ loadType }}</a
+            >
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light header-panel">
+<!-- <nav class="navbar navbar-expand-lg navbar-toggleable-xl navbar-light bg-light header-panel">
     <a class="navbar-brand" href="#">CE</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -7,7 +7,7 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link active" (click)="saveData()" href="#">Save <span class="sr-only">(current)</span></a>
         <!-- <button class="btn btn-link" (click)="saveData()">Save</button> -->
-        <a class="nav-item nav-link" href="#">Align Code</a>
+        <!-- <a class="nav-item nav-link" href="#" (click)="alignCode()">Align Code</a>
         <div class="dropdown">
             <a class="nav-item nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Tabs
@@ -33,8 +33,48 @@
                 </div>
             </div>
           </div>
-        <a class="nav-item nav-link danger" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-play"></i>Run</a>
+        <a class="nav-item nav-link danger runPlayground" href="#" tabindex="-1" aria-disabled="true" (click)="runPlayground()">Run</a>
       </div>
     </div>
-  </nav>
+  </nav> --> -->
   
+
+  <nav class="navbar navbar-expand navbar-light bg-light  header-panel fixed-top">
+        <a class="navbar-brand" href="#">CE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-item nav-link active" (click)="saveData()" href="#">Save <span class="sr-only">(current)</span></a>
+                  <!-- <button class="btn btn-link" (click)="saveData()">Save</button> -->
+                  <a class="nav-item nav-link" href="#" (click)="alignCode()">Align Code</a>
+                  <div class="dropdown">
+                      <a class="nav-item nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tabs
+                      </a>
+                    
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <div class="checkbox navbar-btn dropdown-item">
+                              <label class="navbar-link" for="html">
+                                  <input type="checkbox" class="autosubmit" id="html" [(ngModel)]="selectedHtml" (change)="tabsChanged()">
+                                  HTML
+                              </label>
+                          </div>
+                          <div class="checkbox navbar-btn dropdown-item">
+                              <label class="navbar-link" for="css">
+                                  <input type="checkbox" class="autosubmit" id="css" [(ngModel)]="selectedCss" (change)="tabsChanged()">
+                                  CSS
+                              </label>
+                          </div> <div class="checkbox navbar-btn dropdown-item">
+                              <label class="navbar-link" for="js">
+                                  <input type="checkbox" class="autosubmit" id="js" [(ngModel)]="selectedJs" (change)="tabsChanged()">
+                                  Javascript
+                              </label>
+                          </div>
+                      </div>
+                    </div>
+                  <a class="nav-item nav-link danger runPlayground" href="#" tabindex="-1" aria-disabled="true" (click)="runPlayground()">Run</a>
+                </div>
+              </div>
+      </nav>
