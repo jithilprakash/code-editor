@@ -1,0 +1,74 @@
+<div class="editor-container">
+  <button class="btn btn-primary" (click)="runPlayground()">Run</button>
+
+  <div class="row">
+    <div class="col-md-6" *ngIf="showHtml">
+        <div class="row">
+            <div class="col-auto mr-auto"><label for="html">HTML </label></div>
+            <div class="col-auto"><button class="btn btn-xs btn-success beautify-btn" (click)="beautify()">Beautify</button></div>
+          </div>
+      
+      
+      <ace-editor
+        [(text)]="html"
+        [mode]="'html'"
+        #editor
+        (textChanged)="onDataChange()"
+        class="editor-dim"
+      ></ace-editor>
+    </div>
+
+    <div class="col-md-6 col-md-offset-2" *ngIf="showCss">
+      <label for="css">CSS</label>
+      <ace-editor
+        [(text)]="css"
+        [mode]="'css'"
+        #cssEditor
+        (textChanged)="onDataChange()"
+        class="editor-dim"
+      ></ace-editor>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6" *ngIf="showJs">
+      <div class="dropdown">
+        Javascript
+        <button
+          class="btn btn-link dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {{loadType}}
+        </button>
+        <div class="dropdown-menu">
+          <div *ngFor="let loadType of jsLoadType">
+            <a class="dropdown-item" href="#" (click)="selectedLoadType(loadType)">{{ loadType }}</a>
+          </div>
+        </div>
+      </div>
+      <ace-editor
+        [(text)]="js"
+        (textChanged)="onDataChange()"
+        [mode]="'javascript'"
+        #jsEditor
+        class="editor-dim"
+      ></ace-editor>
+    </div>
+
+    <div class="col-md-6 col-md-offset-2">
+      <label for="result">Result</label>
+      <div class="row">
+        <iframe
+          #iframe
+          style="height: 150px;"
+          class="editor-dim"
+          sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+          frameborder="0"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</div>
